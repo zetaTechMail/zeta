@@ -187,24 +187,39 @@ function loadScriptAsync(scriptSrc, callback) {
   if (typeof callback !== 'function') {
       throw new Error('Not a valid callback for async script load');
   }
+  var frag = document.createDocumentFragment();
+
   var script = document.createElement('script');
   script.setAttribute("async", "");
-  script.onload = callback;
+  // script.onload = callback;
   script.src = scriptSrc;
-  document.head.appendChild(script);
-}
+  frag.appendChild(script);
 
-/* This is the part where you call the above defined function and "call back" your code which gets executed after the script has loaded */
-loadScriptAsync('https://www.googletagmanager.com/gtag/js?id=G-RJFN27WG7P', function(){
-  var script = document.createElement('script');
-  script.textContent = 
+  var script2 = document.createElement('script');
+  script2.textContent = 
     `
     window.dataLayer = window.dataLayer || [];
     function gtag(){dataLayer.push(arguments);}
     gtag('js', new Date());
   
     gtag('config', 'G-RJFN27WG7P');`
-  document.head.appendChild(script);
+  frag.appendChild(script2);
+
+
+  document.head.prepend(frag);
+}
+
+/* This is the part where you call the above defined function and "call back" your code which gets executed after the script has loaded */
+loadScriptAsync('https://www.googletagmanager.com/gtag/js?id=G-RJFN27WG7P', function(){
+  // var script = document.createElement('script');
+  // script.textContent = 
+  //   `
+  //   window.dataLayer = window.dataLayer || [];
+  //   function gtag(){dataLayer.push(arguments);}
+  //   gtag('js', new Date());
+  
+  //   gtag('config', 'G-RJFN27WG7P');`
+  // document.head.appendChild(script);
 
 
 })
