@@ -188,6 +188,7 @@ function loadScriptAsync(scriptSrc, callback) {
       throw new Error('Not a valid callback for async script load');
   }
   var script = document.createElement('script');
+  script.setAttribute("async", "");
   script.onload = callback;
   script.src = scriptSrc;
   document.head.appendChild(script);
